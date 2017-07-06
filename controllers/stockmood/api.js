@@ -1,5 +1,5 @@
 var co = require('co');
-var path = require('path');
+var CONFIG = require('../../config/settings');
 var thunkify = require('thunkify');
 var CODE = require('../../dal/code');
 var utils = require('../../dal/utils');
@@ -242,6 +242,7 @@ module.exports.goToStockDetail = function(req, res, next) {
 	 */
 	var limit = 30;
 	var search = typeof req.query.cv !== 'undefined' ? req.query.cv : false; // currentValue
+	search = decodeURIComponent(search);
 	var compareSearch = function(arr) {
 		// 匹配Symbol和Name
 		let result = {
@@ -268,7 +269,9 @@ module.exports.goToStockDetail = function(req, res, next) {
 	}
 	if (search) {
 		co(function*() {
-			search = decodeURIComponent(search);
+			search = search.split(' ').join('\\ ');
+			search = search.split('(').join('\\(');
+			search = search.split(')').join('\\)');
 			var searchReg = new RegExp(search, 'i'); // i,不区分大小写
 			var result = [];
 			var startTime = new Date().getTime();
@@ -294,7 +297,7 @@ module.exports.goToStockDetail = function(req, res, next) {
 				}, CODE.SERVER_EXECUTE_MONGODB_ERROR);
 			}
 			var endTime = new Date().getTime();
-			console.log(`getStockListAsLike -> 模糊查询 [ ${decodeURIComponent(search)} ] 成功，用时： ${(endTime-startTime)/1000}s`);
+			console.log(`getStockListAsLike -> 模糊查询 [${(search)}] 成功，用时： ${(endTime-startTime)/1000}s`);
 			if (result.length <= 0) {
 				return utils.response(req, res, {
 					data: false,
@@ -315,8 +318,10 @@ module.exports.goToStockDetail = function(req, res, next) {
 	}
 };
 
+//
+
 /*module.exports.getMainChart1 = function(req, res, next) {
-	// Stockmood 详情页 - 获取stock详情图表 option
+	// Stockmood 详情页 demo - 获取stock详情图表 option
 	// 数据模型 time0 open1 close2 min3 max4 vol5 tag6 macd7 dif8 dea9
 	// ['2015-10-19',18.56,18.25,18.19,18.56,55.00,0,-0.00,0.08,0.09] 
 	var data = splitData([
@@ -1245,7 +1250,7 @@ var crawlerNews = function*(symbol, time) { // 调用爬虫，爬取新闻
 	var data = [];
 	var result = false;
 	var shellResult = false;
-	var shellFilePath = path.resolve('/Users/leo.yy/Desktop/dev/alien/StockRecommandSystem/Source/FetchData/Fetch_Data_News_US.py');
+	var shellFilePath = CONFIG.crawler.Fetch_Data_News_US; // path.resolve('/Users/leo.yy/Desktop/dev/alien/StockRecommandSystem/Source/FetchData/Fetch_Data_News_US.py');
 	try {
 		// shellResult = yield utils.execSync(shellFilePath, [symbol]); // 正常情况下返回数组，为shell printf出来的内容，并不是log中的内容
 		var command = `python3.5 ${shellFilePath} ${symbol}`;

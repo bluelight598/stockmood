@@ -80,14 +80,38 @@ var thunkify = require('thunkify');
 var mongoose = require('../dal/mongodb/');
 var fs = require('fs');
 
-var SheetUsNewsModel = mongoose.stock_db.model('SHEET_US_NEWS');
+// var SheetUsNewsModel = mongoose.stock_db.model('SHEET_US_NEWS');
 co(function*(){
-	var result = yield SheetUsNewsModel.findOne({symbol:'AMD'});
+	/*var result = yield SheetUsNewsModel.findOne({symbol:'AMD'});
 	console.log('SHEET_US_NEWS')
 	console.log(result.data)
 	console.log(result.symbol)
 	console.log(typeof result)
-	fs.writeFileSync('./abc.json',result);
+	fs.writeFileSync('./abc.json',result);*/
+	var search = '1st Constitution Bancorp (NJ)';
+	// var search = '1st\\ Constitution\\ Bancorp\\ \\(NJ\\)';
+	search = search.split(' ').join('\\ ');
+	search = search.split('(').join('\\(');
+	search = search.split(')').join('\\)');
+	console.log(search)
+	var searchReg = new RegExp(search, 'i'); // i,不区分大小写
+	console.log(searchReg)
+
+	var result = yield mongoose.stock_db.model('SHEET_US_DAILY_LIST').find({
+		$or: [{
+			"symbol": {
+				$regex: searchReg
+			}
+		}, {
+			"name": {
+				$regex: searchReg
+			}
+		}]
+	}, null, {
+		// skip: (page - 1) * 3, // start
+		limit: 4
+	});
+	console.log(result)
 });
 
 // var stockItemModel = mongoose.stock_db.model('StockItem');

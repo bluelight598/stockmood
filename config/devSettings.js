@@ -1,3 +1,4 @@
+var path = require('path');
 var logManager = require('../dal/logger');
 var log = logManager.getLogger('systemService');
 var settings = {
@@ -46,6 +47,9 @@ var settings = {
 			host: 'smtp.100credit.com',
 			ssl: false
 		}
+	},
+	crawler: {
+		Fetch_Data_News_US: path.resolve('/Users/leo.yy/Desktop/dev/alien/StockRecommandSystem/Source/FetchData/Fetch_Data_News_US.py') // 爬取新闻脚本路径
 	}
 };
 
