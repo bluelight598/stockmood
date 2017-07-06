@@ -1,0 +1,41 @@
+{
+    "apps": [{
+        "name": "stockmood",
+        "script": "app.js",
+        "env": {
+            "COMMON_VARIABLE": "true"
+        },
+        "env_production": {
+            "NODE_ENV": "production"
+        }
+    }],
+    "deploy": {
+        "production": {
+            "user": "fedadmin",
+            "host": ["47.93.225.251"],
+            "ref": "origin/master",
+            "repo": "git@github.com:bluelight598/stockmood.git",
+            "ssh_options": "StrictHostKeyChecking=no",
+            "path": "/opt/cobarla/earth",
+            "post-deploy": "git pull && npm install && webpack --config webpack.config.js -p && PM2_HOME='/opt/cobarla/earth/.pm2' pm2 startOrRestart ecosystem.json --env production",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        },
+        "daily": {
+            "user": "fedadmin",
+            "host": ["47.93.225.251"],
+            "ref": "origin/master",
+            "repo": "git@github.com:bluelight598/stockmood.git",
+            "path": "/opt/cobarla/earth",
+            "post-deploy": "git pull && npm install && webpack --config webpack.config.js -p && PM2_HOME='/opt/cobarla/earth/.pm2' pm2 startOrRestart ecosystem.json --env daily",
+            "env": {
+                "NODE_ENV": "daily"
+            }
+        }
+    },
+    "avoidBuildList": [
+        "c/awp/monitor",
+        "c/dragonfly/risk/riskSearch"
+    ]
+}

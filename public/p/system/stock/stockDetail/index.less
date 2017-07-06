@@ -1,0 +1,584 @@
+@import "../../../../lib/common/common.less";
+
+body {
+	background-color: #f9f9f9;
+	#container {
+		position: relative;
+		.header-container {}
+		.content-container {
+			.left-content-warpper {
+				.stock-chart-container {
+
+				}
+				.stock-news-container { // 相关新闻
+					position: relative;
+					// .stock-news-loading-mask {
+					// 	position: absolute;
+					// 	top: 0;
+					// 	left: 0;
+					// 	width: 100%;
+					// 	height: 100%;
+					// 	background-color: #000000;
+					// 	opacity: 0.1;
+					// }
+				}
+			}
+			.right-content-warpper {
+				.opinion-points-container { // 舆论指数
+
+				}
+				.opinion-hot-container { // 热门舆论
+				}
+			}
+		}
+		@media screen and (max-width:579px){
+			.content-container {
+				width: 100%;
+				position: relative;
+				margin: 0 auto;
+				.left-content-warpper {
+					width: 100%;
+					position: relative;
+					display: inline-block;
+					.stock-chart-container {
+						width: 100%;
+						// height: 554px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 100%;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
+				}
+				.right-content-warpper {
+					width: 100%;
+					display: inline-block;
+					vertical-align: top;
+					.opinion-points-container { // 舆论指数
+						width: 100%;
+						min-height: 45px;
+						background-color: #ffffff;
+						float: left;
+						margin-top: 10px;
+						border: 1px solid #E8E8E8;
+						h2 {
+							font-size: 14px;
+							color: #000000;
+							font-weight: bold;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								padding: 14px 22px;
+								position: relative;
+								background-color: #ffffff;
+								.opinion-points-title {
+									font-size: 14px;
+									display: inline-block;
+								}
+								.opinion-points-info {
+									float: right;
+									top: 0;
+									right: 0;
+									display: inline-block;
+									font-size: 14px;
+									em {
+										font-style: normal;
+										&.stock-rise-up {
+											color: #FF4040;
+										}
+										&.stock-go-down {
+											color: #1FB955;
+										}
+									}
+								}
+								&:nth-child(2n) {
+									background-color: #f6f6f6;
+								}
+							}
+						}
+					}
+					.opinion-hot-container { // 热门舆论
+						margin-top: 10px;
+						padding-bottom: 38px;
+						width: 100%;
+						min-height: 45px;
+						background-color: #ffffff;
+						float: left;
+						border: 1px solid #E8E8E8;
+						.opinion-hot-title {
+							color: #000000;
+							font-size: 14px;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								display: block;
+								padding: 12px 22px;
+								min-height: 86px;
+								position: relative;
+								.opinion-hot-avatar {
+									display: inline-block;
+									border: none;
+									// vertical-align: top;
+									position: absolute;
+									top: 12px;
+									left: 22px;
+									img {
+										background-color: #f9f9f9;
+										display: block;
+										width: 48px;
+										height: 48px;
+										border-radius: 50%;
+										border: 1px solid #f9f9f9;
+									}
+								}
+								.opinion-hot-info {
+									// padding-left: 14px;
+									padding-left: 62px;
+									display: inline-block;
+									min-width: 264px;
+									h3 {
+										line-height: 26px;
+										font-size: 14px;
+										font-weight: bold;
+										color: #000000;
+										span {
+											color: #9b9b9b;
+											font-weight: normal;
+											padding-left: 5px; 
+										}
+									}
+									p {
+										font-size: 12px;
+										// text-align:justify;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		@media screen and (min-width: 580px) and (max-width: 1067px) {
+			.content-container {
+				width: 100%;
+				position: relative;
+				margin: 0 auto;
+				.left-content-warpper {
+					width: 100%;
+					position: relative;
+					display: inline-block;
+					.stock-chart-container {
+						width: 100%;
+						// height: 554px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 100%;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
+				}
+				.right-content-warpper {
+					width: 100%;
+					display: inline-block;
+					vertical-align: top;
+					.opinion-points-container { // 舆论指数
+						width: 40%;
+						min-height: 45px;
+						background-color: #ffffff;
+						float: left;
+						margin-top: 10px;
+						border: 1px solid #E8E8E8;
+						h2 {
+							font-size: 14px;
+							color: #000000;
+							font-weight: bold;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								padding: 14px 22px;
+								position: relative;
+								background-color: #ffffff;
+								.opinion-points-title {
+									font-size: 14px;
+									display: inline-block;
+								}
+								.opinion-points-info {
+									float: right;
+									top: 0;
+									right: 0;
+									display: inline-block;
+									font-size: 14px;
+									em {
+										font-style: normal;
+										&.stock-rise-up {
+											color: #FF4040;
+										}
+										&.stock-go-down {
+											color: #1FB955;
+										}
+									}
+								}
+								&:nth-child(2n) {
+									background-color: #f6f6f6;
+								}
+							}
+						}
+					}
+					.opinion-hot-container { // 热门舆论
+						padding-bottom: 38px;
+						width: 60%;
+						min-height: 45px;
+						background-color: #ffffff;
+						float: left;
+						border: 1px solid #E8E8E8;
+						margin-top: 10px;
+						.opinion-hot-title {
+							color: #000000;
+							font-size: 14px;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								display: block;
+								padding: 12px 22px;
+								min-height: 86px;
+								position: relative;
+								.opinion-hot-avatar {
+									display: inline-block;
+									border: none;
+									// vertical-align: top;
+									position: absolute;
+									top: 12px;
+									left: 22px;
+									img {
+										background-color: #f9f9f9;
+										display: block;
+										width: 48px;
+										height: 48px;
+										border-radius: 50%;
+										border: 1px solid #f9f9f9;
+									}
+								}
+								.opinion-hot-info {
+									// padding-left: 14px;
+									padding-left: 62px;
+									display: inline-block;
+									min-width: 264px;
+									h3 {
+										line-height: 26px;
+										font-size: 14px;
+										font-weight: bold;
+										color: #000000;
+										span {
+											color: #9b9b9b;
+											font-weight: normal;
+											padding-left: 5px; 
+										}
+									}
+									p {
+										font-size: 12px;
+										// text-align:justify;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		@media screen and (min-width:1068px){
+			.content-container {
+				width: 1068px;
+				position: relative;
+				margin: 15px auto 0 auto;
+				.left-content-warpper {
+					width: 668px;
+					position: relative;
+					display: inline-block;
+					.stock-chart-container {
+						width: 668px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 668px;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
+				}
+				.right-content-warpper {
+					width: 370px;
+					margin-left: 30px;
+					display: inline-block;
+					vertical-align: top;
+					.opinion-points-container { // 舆论指数
+						min-height: 45px;
+						background-color: #ffffff;
+						border: 1px solid #E8E8E8;
+						h2 {
+							font-size: 14px;
+							color: #000000;
+							font-weight: bold;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								padding: 14px 22px;
+								position: relative;
+								background-color: #ffffff;
+								.opinion-points-title {
+									font-size: 14px;
+									display: inline-block;
+								}
+								.opinion-points-info {
+									float: right;
+									top: 0;
+									right: 0;
+									display: inline-block;
+									font-size: 14px;
+									em {
+										font-style: normal;
+										&.stock-rise-up {
+											color: #FF4040;
+										}
+										&.stock-go-down {
+											color: #1FB955;
+										}
+									}
+								}
+								&:nth-child(2n) {
+									background-color: #f6f6f6;
+								}
+							}
+						}
+					}
+					.opinion-hot-container { // 热门舆论
+						padding-bottom: 38px;
+						min-height: 45px;
+						margin-top: 14px;
+						background-color: #ffffff;
+						border: 1px solid #E8E8E8;
+						margin-top: 10px;
+						.opinion-hot-title {
+							color: #000000;
+							font-size: 14px;
+							padding: 14px 22px;
+							border-bottom: 1px solid #E8E8E8;
+						}
+						ul {
+							li {
+								display: block;
+								padding: 12px 22px;
+								min-height: 86px;
+								position: relative;
+								.opinion-hot-avatar {
+									display: inline-block;
+									border: none;
+									// vertical-align: top;
+									position: absolute;
+									top: 12px;
+									left: 22px;
+									img {
+										background-color: #f9f9f9;
+										display: block;
+										width: 48px;
+										height: 48px;
+										border-radius: 50%;
+										border: 1px solid #f9f9f9;
+									}
+								}
+								.opinion-hot-info {
+									// padding-left: 14px;
+									padding-left: 62px;
+									display: inline-block;
+									width: 264px;
+									h3 {
+										line-height: 26px;
+										font-size: 14px;
+										font-weight: bold;
+										color: #000000;
+										span {
+											color: #9b9b9b;
+											font-weight: normal;
+											padding-left: 5px; 
+										}
+									}
+									p {
+										font-size: 12px;
+										// text-align:justify;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

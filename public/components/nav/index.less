@@ -1,0 +1,151 @@
+// .nav-container {
+// 	background-color: #1c5cb2;
+// 	padding-top: 18px;
+// 	min-width: 400px;
+// 	max-width: 800px;
+// 	position: relative;
+// 	margin: 0 auto;
+// 	.nav-login-bar { /*登录按钮组件*/
+// 		height: 30px;
+// 		.nav-btns {
+// 			display: inline-block;
+// 			width: 70px;
+// 			line-height: 28px;
+// 			font-size: 10px;
+// 			text-align: center;
+// 			float: right;
+// 		}
+// 		.nav-login-btn {
+// 			color: #000000;
+// 			background: #ffffff;
+// 		}
+// 		.nav-signup-btn {
+// 			color: #ffffff;
+// 		}
+// 	}
+// }
+
+* {
+	box-sizing: border-box;
+}
+.nav-container {
+	padding: 18px 0;
+	position: relative;
+	width: 100%;
+	min-width: 400px;
+	.nav-warpper{
+		position: relative;
+		min-width: 400px;
+		max-width: 800px;
+		margin: 0 auto;
+		text-align: center;
+		.nav-login-bar { /*登录按钮组件*/
+			width: 150px;
+			height: 30px;
+			display: inline-block;
+			float: right;
+			.nav-btns {
+				display: inline-block;
+				width: 70px;
+				line-height: 28px;
+				font-size: 10px;
+				text-align: center;
+				border-radius: 4px;
+				margin-right: 5px;
+			}
+		}
+	}
+	&.nav-home {
+		background-color: #1c5cb2;
+		.nav-warpper{
+			.nav-login-bar { /*登录按钮组件*/
+				.nav-btns {
+				}
+				.nav-login-btn {
+					color: #000000;
+					background: #ffffff;
+				}
+				.nav-signup-btn {
+					color: #ffffff;
+				}
+			}
+		}
+	}
+	&.nav-default {
+		background-color: #ffffff;
+		.nav-warpper{
+			.nav-logo {
+				// display: inline-block;
+				float: left;
+				left: 0;
+				.nav-logo-icon {
+					background-color: #1C5CB2;
+					display: inline-block;
+					width: 32px;
+					height: 32px;
+					border-radius: 50%;
+					line-height: 32px;
+					margin-right: 10px;
+					vertical-align: bottom;
+					color: #ffffff;
+				}
+				.nav-logo-title {
+					color: #1C5CB2;
+					display: inline-block;
+					height: 32px;
+					line-height: 32px;
+					font-size: 20px;
+					font-weight: bold;
+				}
+			}
+			.nav-login-bar { /*登录按钮组件*/
+				.nav-btns {
+				}
+				.nav-login-btn {
+					color: #4A4A4A;
+					background: #ffffff;
+					border: 1px solid #E8E8E8;
+				}
+				.nav-signup-btn {
+					color: #ffffff;
+					background-color: #1C5CB2;
+					border: 1px solid #1C5CB2;
+				}
+			}
+
+			@media screen and (max-width:579px){
+				.nav-logo {
+					.nav-logo-icon {
+						margin-left: 5px; 
+						margin-right: 0; 
+			 		}
+					.nav-logo-title {
+						display: none;
+					}
+				}
+			}
+			@media screen and (min-width: 580px) and (max-width: 660px) {
+				.nav-logo {
+					.nav-logo-icon {
+						margin-left: 5px; 
+						margin-right: 0; 
+					}
+					.nav-logo-title {
+						margin-left: 5px; 
+					}
+				}
+			}
+			@media screen and (min-width:661px){
+				.nav-logo {
+					.nav-logo-icon {
+						margin-left: 5px; 
+						margin-right: 10px; 
+					}
+					.nav-logo-title {
+						// margin-left: 5px; 
+					}
+				}
+			}
+		}
+	}
+}
