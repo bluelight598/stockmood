@@ -37,7 +37,7 @@ var productionConfig = [{
         new webpack.optimize.UglifyJsPlugin({
             minimize: true,
             compress: {
-                warnings: true, // false禁止uglify代码检测警告
+                warnings: false, // false禁止uglify代码检测警告
             },
         }),
         new webpack.DefinePlugin({
@@ -45,7 +45,21 @@ var productionConfig = [{
 				NODE_ENV: JSON.stringify('production')
 			}
 		}),
-        new ExtractTextPlugin('./[name]/index.css')
+        new ExtractTextPlugin('./[name]/index.css'),
+
+        new webpack.optimize.CommonsChunkPlugin({
+          name: "common",
+          // (the commons chunk name)
+
+          filename: "common.js",
+          // (the filename of the commons chunk)
+
+          // minChunks: 3,
+          // (Modules must be shared between 3 entries)
+
+          // chunks: ["pageA", "pageB"],
+          // (Only use these entries)
+        })
 
     ]
 }];
