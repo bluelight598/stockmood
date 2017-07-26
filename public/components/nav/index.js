@@ -33,12 +33,14 @@ class Nav extends React.Component {
             </section>
           );
         } else if (barType == 'default') {
+                  // <div className="nav-logo-icon">IiI</div>
+                  // <h1 className="nav-logo-title">Stockmood</h1>
+                  // <object data="../../images/stockmood.svg" width="156" height="32" style={{'fill':'#1c5cb2'}} type="image/svg+xml" />
           return (
             <section className="nav-container nav-default">
               <div className="nav-warpper clearfix">
                 <div className="nav-logo">
-                  <div className="nav-logo-icon">IiI</div>
-                  <h1 className="nav-logo-title">Stockmood</h1>
+                  <a className="nav-logo-svg" href="/"></a>
                 </div>
                 <Search searchType="nav"></Search>
                 <NavLoginBar {...this.props}></NavLoginBar>

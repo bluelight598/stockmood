@@ -122,14 +122,26 @@
 		.search-input-container {
 			position: relative;
 			margin: 0 auto;
-			font-family: "stock-iconfont";
+			.search-icon {
+				font-family: "stock-iconfont";
+				position: absolute;
+				top: 0;
+				left: 16px;
+				width: 16px;
+				height: 46px;
+				line-height: 46px;
+				font-size: 16px;
+				color: #999999;
+				display: inline-block;
+				font-style: normal;
+			}
 			#search-inputer {
 				position: relative;
 				margin: 0 auto;
 				display: block;
 				font-size: 16px;
 				line-height: 16px;
-				padding: 12px 16px;
+				padding: 12px 16px 12px 44px;
 				border: none;
 				border-radius: 2px;
 				::active {
@@ -164,6 +176,9 @@
 					padding: 0 18px;
 					background-color: #ffffff;
 					cursor: pointer;
+					white-space:nowrap;
+					text-overflow:ellipsis;
+					overflow:hidden;
 					strong {
 						color: #050505;
 						font-size: 14px;
@@ -238,14 +253,27 @@
 		.search-input-container {
 			position: relative;
 			margin: 0 auto;
-			font-family: "stock-iconfont";
+			.search-icon {
+				font-family: "stock-iconfont";
+				position: absolute;
+				top: 0;
+				left: 16px;
+				width: 16px;
+				height: 34px;
+				line-height: 34px;
+				font-size: 16px;
+				color: #999999;
+				display: inline-block;
+				font-style: normal;
+			}
 			#search-inputer {
 				position: relative;
 				margin: 0 auto;
 				display: block;
 				font-size: 12px;
 				line-height: 14px;
-				padding: 8px 16px;
+				// padding: 8px 16px;
+				padding: 8px 16px 8px 44px;
 				border: none;
 				border-radius: 2px;
 				border: 1px solid #E8E8E8;
@@ -282,6 +310,9 @@
 					padding: 0 18px;
 					background-color: #ffffff;
 					cursor: pointer;
+					white-space:nowrap;
+					text-overflow:ellipsis;
+					overflow:hidden;
 					strong {
 						color: #050505;
 						font-size: 14px;

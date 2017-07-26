@@ -12,9 +12,17 @@
 			padding: 14px 22px;
 			border-bottom: 1px solid #E8E8E8;
 			.stock-news-header-title {
+				width: 4em;
+				display: inline-block;
 				font-size: 20px;
 				font-weight: bold;
 				color: #000000;
+			}
+			.stock-news-date-btns {
+				display: inline-block;
+				position: absolute;
+				right: 28px;
+				top: 0;
 			}
 		}
 		.stock-news-list-content {
@@ -33,6 +41,12 @@
 					line-height: 20px;
 					color: #666666;
 					text-align:justify;
+					// display: block;
+					// width: 100%;
+				}
+				pre {
+					white-space: pre-wrap;
+					word-wrap: break-word;
 				}
 			}
 			.stock-news-item-btns {
@@ -106,9 +120,17 @@
 			padding: 14px 22px;
 			border-bottom: 1px solid #E8E8E8;
 			.stock-news-header-title {
+				width: 4em;
+				display: inline-block;
 				font-size: 20px;
 				font-weight: bold;
 				color: #000000;
+			}
+			.stock-news-date-btns {
+				display: inline-block;
+				position: absolute;
+				right: 28px;
+				top: 0;
 			}
 		}
 		.stock-news-list-content {
@@ -127,6 +149,10 @@
 					line-height: 20px;
 					color: #666666;
 					text-align:justify;
+				}
+				pre {
+					white-space: pre-wrap;
+					word-wrap: break-word;
 				}
 			}
 			.stock-news-item-btns {
@@ -202,9 +228,31 @@
 			padding: 14px 22px;
 			border-bottom: 1px solid #E8E8E8;
 			.stock-news-header-title {
+				width: 4em;
+				display: inline-block;
 				font-size: 20px;
 				font-weight: bold;
 				color: #000000;
+			}
+			.stock-news-date-btns {
+				display: inline-block;
+				position: absolute;
+				right: 28px;
+				top: 14px;
+				color: #000000;
+				font-size: 12px;
+				line-height: 20px;
+				li {
+					display: inline-block;
+					margin: 0;
+					padding: 0;
+					a {
+						color: #000000;
+						&.hasNoNext {
+							color: #E8E8E8;
+						}
+					}
+				}
 			}
 		}
 		.stock-news-list-content {
@@ -223,6 +271,10 @@
 					line-height: 20px;
 					color: #666666;
 					text-align:justify;
+				}
+				pre {
+					white-space: pre-wrap;
+					word-wrap: break-word;
 				}
 			}
 			.stock-news-item-btns {

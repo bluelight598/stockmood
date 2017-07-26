@@ -90,27 +90,15 @@ co(function*(){
 	fs.writeFileSync('./abc.json',result);*/
 	var search = '1st Constitution Bancorp (NJ)';
 	// var search = '1st\\ Constitution\\ Bancorp\\ \\(NJ\\)';
-	search = search.split(' ').join('\\ ');
-	search = search.split('(').join('\\(');
-	search = search.split(')').join('\\)');
+	// search = search.split(' ').join('\\ ');
+	// search = search.split('(').join('\\(');
+	// search = search.split(')').join('\\)');
 	console.log(search)
 	var searchReg = new RegExp(search, 'i'); // i,不区分大小写
 	console.log(searchReg)
 
-	var result = yield mongoose.stock_db.model('SHEET_US_DAILY_LIST').find({
-		$or: [{
-			"symbol": {
-				$regex: searchReg
-			}
-		}, {
-			"name": {
-				$regex: searchReg
-			}
-		}]
-	}, null, {
-		// skip: (page - 1) * 3, // start
-		limit: 4
-	});
+	var result = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({});
+	fs.writeFileSync('./abc.json',result);
 	console.log(result)
 });
 

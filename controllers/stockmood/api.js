@@ -1247,43 +1247,23 @@ module.exports.getMainChart = function(req, res, next) {
 };
 
 var crawlerNews = function*(symbol, time) { // 调用爬虫，爬取新闻
-	var data = [];
-	var result = false;
 	var shellResult = false;
+	var endTime = (new Date(time)).Format("yyyy-MM-dd");
+	var startTime = new Date(new Date(time).getTime()-3*24*60*60*1000).Format("yyyy-MM-dd");
 	var shellFilePath = CONFIG.crawler.Fetch_Data_News_US; // path.resolve('/Users/leo.yy/Desktop/dev/alien/StockRecommandSystem/Source/FetchData/Fetch_Data_News_US.py');
 	try {
-		// shellResult = yield utils.execSync(shellFilePath, [symbol]); // 正常情况下返回数组，为shell printf出来的内容，并不是log中的内容
-		var command = `python3.5 ${shellFilePath} ${symbol}`;
+		var command = `python3.5 ${shellFilePath} ${symbol} ${startTime} ${endTime}`;
 		console.log(`准备执行下面脚本命令： ${command}`);
 		shellResult = yield utils.execSync(command); // 正常情况下返回数组，为shell printf出来的内容，并不是log中的内容
 	} catch (err) {
 		console.log('crawlerNews error')
 		console.log(err)
 	}
-
-	try {
-		result = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({
-			symbol: symbol
-		});
-		var newsArr = JSON.parse(result.data);
-		for (var index = 0; index < newsArr.length; index++) {
-			var item = newsArr[index];
-			if (item.date == time) {
-				data.push(item);
-			}
-		}
-		if (data.length > 0) {
-			return utils.response(req, res, {
-				data: data
-			}, CODE.SUCCESS);
-		}
-	} catch (e) {
-		console.log(result.data)
-		console.log('解析出错')
-		console.log(e)
-	}
-	return data;
-	// return shellResult;
+	var result = yield mongoose.stock_db.model('SHEET_US_NEWS').find({
+		symbol: symbol,
+		date: time
+	});
+	return result;
 }
 
 module.exports.getNewsList = function(req, res, next) {
@@ -1292,44 +1272,25 @@ module.exports.getNewsList = function(req, res, next) {
 	 */
 	var time = req.query.time || false;
 	var symbol = req.query.symbol || false;
-	var data = [];
-	console.log(time);
+	var dataNews = [];
 	co(function*() {
 		if (time && symbol) {
-			var newsArr = false;
 			var shellResult = false;
-			var result = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({
-				symbol: symbol
+			dataNews = yield mongoose.stock_db.model('SHEET_US_NEWS').find({
+				symbol: symbol,
+				date: time
 			});
-			if (result) { // 存在结果
-				var nowDate = new Date().getTime();
-				var lastUpdate = new Date(result.metadata.last_update).getTime();
-				var targetDate = new Date(time).getTime();
-				if ((lastUpdate < nowDate - 24 * 60 * 60 * 1000) && (targetDate > lastUpdate + 12 * 60 * 60 * 1000)) { // 上次爬取时间为1天以前 && 目标日期 大于 最后更新时间 12小时，则爬取新的
-					console.log('有数据，但需要更新爬取');
-					data = yield crawlerNews(symbol, time);
-				} else { // 不需要爬取，有则展示，没有显示空
-					try {
-						newsArr = JSON.parse(result.data);
-						for (var index = 0; index < newsArr.length; index++) {
-							var item = newsArr[index];
-							if (item.date == time) {
-								data.push(item);
-							}
-						}
-					} catch (e) {
-						console.log(result.data)
-						console.log('解析出错')
-						console.log(e)
-					}
-				}
+			if (dataNews.length) { // 存在结果
+				return utils.response(req, res, {
+					data: dataNews
+				}, CODE.SUCCESS);
 			} else { // 不存在结果
 				console.log('没数据，需要爬取');
-				data = yield crawlerNews(symbol, time);
+				dataNews = yield crawlerNews(symbol, time);
 			}
 		}
 		return utils.response(req, res, {
-			data: data
+			data: dataNews
 		}, CODE.SUCCESS);
 	});
 }

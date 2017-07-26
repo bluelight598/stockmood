@@ -28,14 +28,15 @@ const store = createStore(
 
 const rootEl = document.getElementById('container');
 
+                // <div className="stock-logo-icon">lil</div>
+                // <h1 className="stock-logo-title">Stockmood</h1>
 ReactDOM.render(
   <Provider store={store}>
     <section>
         <section className="header-container">
             <NavBar barType="home"></NavBar>
             <div className="stock-logo-warpper">
-                <div className="stock-logo-icon">lil</div>
-                <h1 className="stock-logo-title">Stockmood</h1>
+                <div className="nav-logo-svg"></div>
             </div>
             <Search searchType="home"></Search>
         </section>

@@ -5,7 +5,7 @@ const entries = require('./dal/entryGetter.js').dev;
 // var nodeExternals = require('webpack-node-externals');
 module.exports = {
 	// devtool: 'eval-source-map',
-    entry: entries,
+	entry: entries,
 	// entry: {
 	// 	main: [
 	// 		// 'webpack-dev-server/client?http://localhost:8080',
@@ -14,11 +14,11 @@ module.exports = {
 	// 	]
 	// },
 	output: {
-        filename: './[name]/bundle.js',
-        path: path.resolve(__dirname, './public'),
-        publicPath: 'http://localhost:3000/',
-        // libraryTarget: 'commonjs2'
-    },
+		filename: './[name]/bundle.js',
+		path: path.resolve(__dirname, './public'),
+		publicPath: 'http://localhost:3000/',
+		// libraryTarget: 'commonjs2'
+	},
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
@@ -29,13 +29,13 @@ module.exports = {
 			exclude: /node_modules/,
 
 			// query: {                //node端的babel编译配置可以简化很多
-	        //     babelrc: "false",
-	        //     presets: ['react'],
-	        //     plugins: [
-	        //         // "transform-decorators-legacy",
-	        //         // "transform-es2015-modules-commonjs" //如果不转换成require，import 'xxx.styl'会报错
-	        //     ]
-	        // }
+			//     babelrc: "false",
+			//     presets: ['react'],
+			//     plugins: [
+			//         // "transform-decorators-legacy",
+			//         // "transform-es2015-modules-commonjs" //如果不转换成require，import 'xxx.styl'会报错
+			//     ]
+			// }
 		}, {
 			test: /\.less$/,
 			use: [
@@ -46,7 +46,9 @@ module.exports = {
 			// options: {
 			// 	modules: true
 			// }
-
+		}, {
+			test: /\.svg/,
+			loader: 'svg-url-loader'
 		}, {
 			test: /\.(jpg|png)$/,
 			// loader: 'url?limit=8192'
@@ -90,15 +92,15 @@ module.exports = {
 			}
 		}),
 		// new webpack.ProvidePlugin({
-        //     'react': 'react',
-        //     'react-dom': 'react-dom',
-        //     'react-redux': 'react-redux',
-        //     'redux': 'redux',
-        //     'redux-thunk': 'redux-thunk',
-        //     'redux-form': 'redux-form',
-        //     'redux-form-website-template': 'redux-form-website-template',
-        //     'superagent': 'superagent'
-        // }),
+		//     'react': 'react',
+		//     'react-dom': 'react-dom',
+		//     'react-redux': 'react-redux',
+		//     'redux': 'redux',
+		//     'redux-thunk': 'redux-thunk',
+		//     'redux-form': 'redux-form',
+		//     'redux-form-website-template': 'redux-form-website-template',
+		//     'superagent': 'superagent'
+		// }),
 	],
 
 	// externals: [nodeExternals({ //不把node_modules中的文件打包，报错module.export error

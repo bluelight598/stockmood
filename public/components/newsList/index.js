@@ -1,15 +1,24 @@
 import React from 'react';
 import './index.less';
+import util from '../../lib/util.js';
 
 class NewsList extends React.Component {
     constructor(props) { // 构造函数
         super(props);
     }
 
-    // static defaultProps = {}
-
     componentDidMount() {
         this.props.getNews(this.props.currentDay);
+    }
+
+    getNextDayNews() {
+        let targetDate = new Date(new Date(this.props.currentDay).getTime() + 24*60*60*1000).Format('yyyy-MM-dd');
+        this.props.getNews(targetDate);
+    }
+
+    getPreviousDayNews() {
+        let targetDate = new Date(new Date(this.props.currentDay).getTime() - 24*60*60*1000).Format('yyyy-MM-dd');
+        this.props.getNews(targetDate);
     }
 
     componentDidUpdate() {}
@@ -28,7 +37,7 @@ class NewsList extends React.Component {
             		listItems.push(
             			<li className="stock-news-list-item" key={`list-item-${i}-${new Date().getTime()}`}>
             				<h2 className="stock-news-list-item-title">{this.props.newsListArr[i].title}</h2>
-            				<p className="stock-news-list-item-content">{this.props.newsListArr[i].body}</p>
+            				<pre className="stock-news-list-item-content">{`${this.props.newsListArr[i].body_eng.slice(0,250)}...`}</pre>
             				<div className="stock-news-item-btns">
             					<ul className="stock-news-item-tags">
             						<li>
@@ -70,10 +79,16 @@ class NewsList extends React.Component {
     }
 
     render() {
+        let hasNextClass = this.props.currentDay === (new Date()).Format('yyyy-MM-dd') ? 'hasNoNext' : '';
         return (
             <div className="stock-news-container">
             	<div className="stock-news-header">
             		<h3 className="stock-news-header-title">相关新闻</h3>
+                    <ul className="stock-news-date-btns">
+                        <li className={`iconfont J_previousDayNews`}><a href="javascript:void(0);" onClick={this.getPreviousDayNews.bind(this)}>&#xe649;</a></li>
+                        <li>{this.props.currentDay}</li>
+                        <li className={`iconfont J_nextDayNews`}><a className={hasNextClass} href="javascript:void(0);" onClick={this.getNextDayNews.bind(this)}>&#xe647;</a></li>
+                    </ul>
             	</div>
             	<ul className="stock-news-list-content">
             		{this.getNewsListItems()}
