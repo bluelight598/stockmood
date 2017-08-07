@@ -40,44 +40,44 @@ module.exports = function(app, rootPath) {
 	/*
 	 * redis持久化session，服务端session丢失后，并尝试三次重连接，github上给出的手动查找session的解决方案。稳定性有待测试
 	 */
-	// var sessionMiddleware = session({
-	// 	name: 'sid',
-	// 	secret: 'Asecret123-',
-	// 	resave: true,
-	// 	rolling: true,
-	// 	saveUninitialized: false,
-	// 	cookie: {
-	// 		domain: 'cobarla.com',
-	// 		httpOnly: true,
-	// 		maxAge: 43200000 // 12*3600*1000
-	// 	},
-	// 	// store: new RedisStore(CONFIG.session.redisStore)
-	// 	store: (function(){
-	// 		console.log('now on redis store')
-	// 		return new RedisStore(CONFIG.session.redisStore);
-	// 	})()
-	// });
-	// app.use(function(req, res, next) {
-	// 	var tries = 3
+	var sessionMiddleware = session({
+		name: 'sid',
+		secret: 'Asecret123-',
+		resave: true,
+		rolling: true,
+		saveUninitialized: false,
+		cookie: {
+			// domain: 'cobarla.com',
+			httpOnly: true,
+			maxAge: 43200000 // 12*3600*1000
+		},
+		// store: new RedisStore(CONFIG.session.redisStore)
+		store: (function(){
+			console.log('now on redis store')
+			return new RedisStore(CONFIG.session.redisStore);
+		})()
+	});
+	app.use(function(req, res, next) {
+		var tries = 3
 
-	// 	function lookupSession(error) {
-	// 		if (error) {
-	// 			return next(error)
-	// 		}
-	// 		tries -= 1
-	// 		if (req.session !== undefined) {
-	// 			return next()
-	// 		}
-	// 		if (tries < 0) {
-	// 			log.error('config.js检测到Redis失联！！！！');
-	// 			log.error('How do I handle lost connections to Redis?By default, the node_redis client will auto-reconnect when a connection is lost. But requests may come in during that time. In express, one way this scenario can be handled is including a "session check" after setting up a session (checking for the existence of req.session):');
-	// 			log.warn('可以参考https://github.com/expressjs/session/issues/99#issuecomment-63853989，如何解决');
-	// 			return next(new Error('由于您的网络不稳定，导致redis连接断开，请尝试刷新当前页面。'));
-	// 		}
-	// 		sessionMiddleware(req, res, lookupSession);
-	// 	}
-	// 	lookupSession();
-	// });
+		function lookupSession(error) {
+			if (error) {
+				return next(error)
+			}
+			tries -= 1
+			if (req.session !== undefined) {
+				return next()
+			}
+			if (tries < 0) {
+				log.error('config.js检测到Redis失联！！！！');
+				log.error('How do I handle lost connections to Redis?By default, the node_redis client will auto-reconnect when a connection is lost. But requests may come in during that time. In express, one way this scenario can be handled is including a "session check" after setting up a session (checking for the existence of req.session):');
+				log.warn('可以参考https://github.com/expressjs/session/issues/99#issuecomment-63853989，如何解决');
+				return next(new Error('由于您的网络不稳定，导致redis连接断开，请尝试刷新当前页面。'));
+			}
+			sessionMiddleware(req, res, lookupSession);
+		}
+		lookupSession();
+	});
 
 	// app.use(function(req, res, next) {
 	// 	access(req, res, next);

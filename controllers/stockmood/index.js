@@ -23,6 +23,9 @@ var userCenterController = {
         app.get('/stockDetail/:symbol/', this.stockDetail); // Stockmood 详情页
         app.get('/stock/getMainChart.do', stockApi.getMainChart); // Stockmood 详情页 - 获取stock详情图表 option
         app.get('/stock/getNewsList.do', stockApi.getNewsList); // Stockmood 详情页 - 获取 [相关新闻]栏目 列表
+        app.get('/api/getUserLogin.do', stockApi.getUserLogin); // 登录mock接口
+        app.get('/api/getUserLogout.do', stockApi.getUserLogout); // 登出mock接口
+        app.get('/api/checkUserLogin.do', stockApi.checkUserLogin); // 检测用户登录接口
 
     },
     stockhome: function(req, res, next) {
@@ -31,6 +34,7 @@ var userCenterController = {
         });
     },
     stockDetail: function(req, res, next) {
+        console.log(req.session)
         var symbol = req.params.symbol;
         if (symbol) {
             co(function*() {

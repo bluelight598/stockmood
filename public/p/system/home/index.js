@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import NavBar from '../../../components/nav/index';
+import LoginBar from '../../../components/login/index';
 import loginReducer from '../../../components/login/reducer';
 import Search from '../../../components/search/index';
 import SearchReducer from '../../../components/search/reducer';
@@ -33,6 +34,7 @@ const rootEl = document.getElementById('container');
 ReactDOM.render(
   <Provider store={store}>
     <section>
+        <LoginBar></LoginBar>
         <section className="header-container">
             <NavBar barType="home"></NavBar>
             <div className="stock-logo-warpper">

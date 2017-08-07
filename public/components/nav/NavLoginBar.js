@@ -1,10 +1,4 @@
 import React from 'react';
-// import { Field, reduxForm } from 'redux-form';
-// import { Button, ButtonToolbar } from 'react-bootstrap';
-// import { connect } from 'react-redux';
-// import './index.less';
-
-// import { getUrlQuery } from '../../../lib/util';
 
 class NavLoginBar extends React.Component {
     constructor(props) { // 构造函数
@@ -20,14 +14,27 @@ class NavLoginBar extends React.Component {
     }
 
     render() {
-        const { doLogin, doSignUp } = this.props;
-        // console.log(`NavLoginBar render, this.props => ${JSON.stringify(this.props)}`);
-        return (
-        	<section className="nav-login-bar">
-        		<a href="javascript:void(0);" className="nav-btns nav-signup-btn" onClick={doSignUp}>SIGN&nbsp;UP</a>
-        		<a href="javascript:void(0);" className="nav-btns nav-login-btn" onClick={doLogin}>LOG&nbsp;IN</a>
-        	</section>
-        );
+        const { showLoginSideBar,login,getUserLogout } = this.props;
+        if (login.isInitLogin) {
+            if (login.isLogin) {
+                return (
+                    <section className="nav-login-bar">
+                        <a href="javascript:void(0);" className="nav-btns nav-user-info" onClick={getUserLogout}>登出&nbsp;{login.userInfo.username}</a>
+                    </section>
+                );
+            } else {
+                return (
+                	<section className="nav-login-bar">
+                		<a href="javascript:void(0);" className="nav-btns nav-login-btn" onClick={showLoginSideBar}>LOG&nbsp;IN</a>
+                        <a href="javascript:void(0);" className="nav-btns nav-signup-btn">SIGN&nbsp;UP</a>
+                	</section>
+                );
+            }
+        } else {
+            return (
+                <section className="nav-login-bar"></section>
+            );
+        }
     }
 }
 

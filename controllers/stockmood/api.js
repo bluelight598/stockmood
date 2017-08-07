@@ -5,6 +5,23 @@ var CODE = require('../../dal/code');
 var utils = require('../../dal/utils');
 var mongoose = require('../../dal/mongodb/');
 
+var redis = require("redis");
+var client = redis.createClient(CONFIG.redisClient);
+client.set = thunkify(client.set);
+client.get = thunkify(client.get);
+client.del = thunkify(client.del);
+
+var kickOffUser = function*(userId) { // 清除指定用户的session信息，踢该用户下线
+	var sessionId = yield client.get('userId:' + userId);
+	if (sessionId) { // 存在失效用户session，则删除旧记录
+		yield client.del(sessionId);
+	} else { // 没找到匹配的sessionID
+		// console.log('没找到匹配的sessionID');
+	}
+};
+
+var crawlerNewsQueue = [];
+
 module.exports.getStockListAsLike = function(req, res, next) {
 	/*
 	 * 根据股票代码，模糊查询mongoDB,不区分大小写，每次返回4条
@@ -1249,16 +1266,24 @@ module.exports.getMainChart = function(req, res, next) {
 var crawlerNews = function*(symbol, time) { // 调用爬虫，爬取新闻
 	var shellResult = false;
 	var endTime = (new Date(time)).Format("yyyy-MM-dd");
-	var startTime = new Date(new Date(time).getTime()-3*24*60*60*1000).Format("yyyy-MM-dd");
+	var startTime = new Date(new Date(time).getTime() - 3 * 24 * 60 * 60 * 1000).Format("yyyy-MM-dd");
 	var shellFilePath = CONFIG.crawler.Fetch_Data_News_US; // path.resolve('/Users/leo.yy/Desktop/dev/alien/StockRecommandSystem/Source/FetchData/Fetch_Data_News_US.py');
-	try {
-		var command = `python3.5 ${shellFilePath} ${symbol} ${startTime} ${endTime}`;
-		console.log(`准备执行下面脚本命令： ${command}`);
-		shellResult = yield utils.execSync(command); // 正常情况下返回数组，为shell printf出来的内容，并不是log中的内容
-	} catch (err) {
-		console.log('crawlerNews error')
-		console.log(err)
+	var command = `python3.5 ${shellFilePath} ${symbol} ${startTime} ${endTime}`;
+	var queueIndex = crawlerNewsQueue.indexOf(command);
+	if (queueIndex === -1) {
+		console.log(`插入新任务，执行脚本命令： ${command}`);
+		crawlerNewsQueue.push(command);
+		try {
+			shellResult = yield utils.execSync(command); // 正常情况下返回数组，为shell printf出来的内容，并不是log中的内容
+		} catch (err) {
+			console.log('crawlerNews error')
+			console.log(err)
+		}
+		crawlerNewsQueue.splice(queueIndex, 1); // 从队列中移除
+	} else {
+		console.log(`发现重复的任务正在爬取，忽略本次操作，重复的脚本命令： ${command}`);
 	}
+	console.log(`当前新闻爬取队列中有 [${crawlerNewsQueue.length}] 个任务`);
 	var result = yield mongoose.stock_db.model('SHEET_US_NEWS').find({
 		symbol: symbol,
 		date: time
@@ -1301,5 +1326,99 @@ module.exports.getOpinionPoints = function(req, res, next) {
 	 */
 	return utils.response(req, res, {
 		data: [{}]
+	}, CODE.SUCCESS);
+}
+
+
+module.exports.getUserLogin = function(req, res, next) {
+	/*
+	 * Stockmood 登录mock接口
+	 */
+	var mockUserDB = {
+		huangyi: {
+			password: '123456',
+			userInfo: {
+				uid: 1,
+				username: 'huangyi'
+			}
+		},
+		zhangdachuan: {
+			password: '123456',
+			userInfo: {
+				uid: 1,
+				username: 'zhangdachuan'
+			}
+		},
+		yangyue: {
+			password: '123456',
+			userInfo: {
+				uid: 1,
+				username: 'yangyue'
+			}
+		}
+	};
+	if (mockUserDB[req.query.username] && mockUserDB[req.query.username].password==req.query.password) {
+		var userInfo = mockUserDB[req.query.username].userInfo;
+		co(function*() { // 用户名、密码验证成功，写入session
+			yield kickOffUser(userInfo.uid); // 尝试删除用户的过期session记录;
+			var setUidResult = yield client.set('userId:' + userInfo.uid, req.sessionID);
+			req.session.accessToken = {
+				accessToken: (new Date().getTime()),
+				username: userInfo.username,
+				uid: userInfo.uid
+			};
+			return utils.response(req, res, {
+				data: userInfo
+			}, CODE.SUCCESS);
+		});
+	} else {
+		return utils.response(req, res, {
+			data: {}
+		}, {
+			code: '20001',
+			message: '登录失败，用户名密码错误'
+		});
+	}
+}
+
+module.exports.getUserLogout = function(req, res, next) {
+	var username = null;
+	if (req.session && typeof req.session.accessToken != 'undefined' && req.session.accessToken.username) {
+		username = req.session.accessToken.username;
+		req.session.destroy(function(err) {
+			if (!err) {
+				console.log(`${username}登出成功`)
+				return utils.response(req, res, {
+					data: {}
+				}, CODE.SUCCESS);
+			} else {
+				console.log(`${username}登出失败`)
+				return utils.response(req, res, {
+					data: {}
+				}, {
+					code: '500',
+					message: '登出失败，服务器内部错误'
+				});
+			}
+		});
+	} else {
+		return utils.response(req, res, {
+			data: {}
+		}, {
+			code: '501',
+			message: '登出失败，服务器内部错误'
+		});
+	}
+	
+}
+
+
+module.exports.checkUserLogin = function(req,res,next) {
+	var accessToken = false;
+	if (req.session.accessToken) {
+		accessToken = req.session.accessToken;
+	}
+	return utils.response(req, res, {
+		userInfo: accessToken
 	}, CODE.SUCCESS);
 }

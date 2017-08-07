@@ -1,0 +1,99 @@
+.stock-login-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	.stock-login-mask {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		z-index: 999;
+		opacity: .6;
+		background-color: #000000;
+		top: 0;
+		left: 0;
+	}
+	.stock-login-warpper {
+		position: fixed;
+		width: 382px;
+		height: 434px;
+		z-index: 1000;
+		top: 50%;
+		margin-top: -217px;
+		left: 50%;
+		margin-left: -191px;
+		background-color: #ffffff;
+		border-radius: 4px;
+		.stock-login-header {
+			padding: 60px 0 15px 0;
+			position: relative;
+			text-align: center;
+			.stock-login-logo-svg {
+				width: 182px;
+				height: 32px;
+				background: url('./../../images/stockmood-blue.svg') no-repeat;
+				background-size: 182px 32px;
+				display: inline-block;
+			}
+			.stock-login-msg {
+				position: relative;
+				height: 20px;
+				line-height: 20px;
+				font-size: 12px;
+				text-align: center;
+				color: red;
+				margin-top: 20px;
+			}
+		}
+		.stock-login-body {
+			position: relative;
+			text-align: center;
+			width: 100%;
+			#stock-login-user-input, #stock-login-passwd-input {
+				display: inline-block;
+				width: 300px;
+				height: 40px;
+				font-size: 14px;
+				line-height: 40px;
+				border-radius: 3px;
+				border: 1px solid #E8E8E8;
+				background-color: #f6f6f6;
+				margin-bottom: 16px;
+				padding-left: 14px;
+				&::-webkit-input-placeholder {
+	            	color: #999999;
+	         	}
+	         	&:-moz-placeholder {
+					color: #999999;
+	            }
+	            &::-moz-placeholder{
+	                color: #999999;
+	            }
+	            &:-ms-input-placeholder {
+	                color: #999999;
+	            }
+			}            
+			.J_doLoginBtn {
+				display: inline-block;
+				width: 300px;
+				height: 40px;
+				font-size: 14px;
+				line-height: 40px;
+				border-radius: 3px;
+				background-color: #1c5cb2;
+				color: #ffffff;
+				margin-top: 10px;
+				text-align: center;
+			}
+		}
+		.stock-login-footer {
+			text-align: center;
+			font-size: 12px;
+			color: #9b9b9b;
+			margin-top: 75px;
+			.J_registerBtn, .J_forgetPassBtn {
+				color: #9b9b9b;
+				cursor: not-allowed;
+			}
+		}
+	}
+}
