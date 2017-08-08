@@ -66,4 +66,15 @@ var SHEET_US_NEWS_SCHEMA = new mongoose.Schema({ // 股票价格信息 - 数据�
 var SHEET_US_NEWS_MODEL = stockDB.model('SHEET_US_NEWS', SHEET_US_NEWS_SCHEMA, 'SHEET_US_NEWS'); // 股票价格日常 - model
 SHEET_US_NEWS_MODEL.find = thunkify(SHEET_US_NEWS_MODEL.find);
 
+// 股票关联性
+var SHEET_US_RELA_SCHEMA = new mongoose.Schema({ // 股票价格信息 - 数据结构
+	company1: String,
+	company2: String,
+	correlation: String,
+	}, {
+	collection: 'SHEET_US_RELA'
+});
+var SHEET_US_RELA_MODEL = stockDB.model('SHEET_US_RELA', SHEET_US_RELA_SCHEMA, 'SHEET_US_RELA'); // 股票价格日常 - model
+// SHEET_US_RELA_MODEL.find = thunkify(SHEET_US_RELA_MODEL.find);
+
 module.exports = stockDB;

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MainStockChart from '../../../../components/stock_chart/index';
 import NewsList from '../../../../components/newsList/index';
+import ListProgram from '../../../../components/listProgram/index';
 
 import $ from 'superagent';
 import superagentJsonapify from 'superagent-jsonapify';
@@ -60,80 +61,81 @@ class ContentContainer extends React.Component {
 		          <NewsList {...this.props.stockDetail} getNews={this.props.getNews}></NewsList>
 		        </div>
 		        <div  className="right-content-warpper">
-		          <div className="opinion-points-container">
-		          	<h2>舆论指数</h2>
-		            <ul>
-			            <li>
-			            	<div className="opinion-points-title">阿里巴巴</div>
-			            	<div className="opinion-points-info ">
-			            		<span>32452</span>
-			            		<em className="iconfont stock-rise-up ">&#xe86c;</em>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-points-title">苹果</div>
-			            	<div className="opinion-points-info ">
-			            		<span>32452</span>
-			            		<em className="iconfont stock-go-down">&#xe60e;</em>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-points-title">百度</div>
-			            	<div className="opinion-points-info ">
-			            		<span>32452</span>
-			            		<em className="iconfont stock-rise-up ">&#xe86c;</em>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-points-title">腾讯</div>
-			            	<div className="opinion-points-info ">
-			            		<span>32452</span>
-			            		<em className="iconfont stock-go-down">&#xe60e;</em>
-			            	</div>
-			            </li>
-		            </ul>
-		          </div>
-		          <div className="opinion-hot-container">
-		          	<h2 className="opinion-hot-title">热门舆论</h2>
-		          	<ul>
-			            <li>
-			            	<div className="opinion-hot-avatar">
-			            		<img />
-			            	</div>
-			            	<div className="opinion-hot-info">
-			            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
-			            		<p>If you decorate a static class property, you will get a descriptor with an initializer property. However whereas with Babel 5 this could be re-executed multiple times with potentially differing results, decorators-legacy will precompute the value and return an initializer that will return that value. e.g.</p>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-hot-avatar">
-			            		<img />
-			            	</div>
-			            	<div className="opinion-hot-info">
-			            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
-			            		<p>If you decorate a static class y will precompute the value and return an initializer that will return that value. e.g.</p>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-hot-avatar">
-			            		<img />
-			            	</div>
-			            	<div className="opinion-hot-info">
-			            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
-			            		<p>If you decoratt will return that value. e.g.</p>
-			            	</div>
-			            </li>
-			            <li>
-			            	<div className="opinion-hot-avatar">
-			            		<img />
-			            	</div>
-			            	<div className="opinion-hot-info">
-			            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
-			            		<p>If you decorate a static class property, you will get a de whereas with Babel 5 this could be re-executed multiple times with potentially differing results, decoe value and return an initit value. e.g.</p>
-			            	</div>
-			            </li>
-			        </ul>
-		          </div>
+		        	<ListProgram programType={`stockRELA`} symbol={this.props.stockDetail.symbol}></ListProgram>
+			        <div className="opinion-points-container">
+			          	<h2>舆论指数</h2>
+			            <ul>
+				            <li>
+				            	<div className="opinion-points-title">阿里巴巴</div>
+				            	<div className="opinion-points-info ">
+				            		<span>32452</span>
+				            		<em className="iconfont stock-rise-up ">&#xe86c;</em>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-points-title">苹果</div>
+				            	<div className="opinion-points-info ">
+				            		<span>32452</span>
+				            		<em className="iconfont stock-go-down">&#xe60e;</em>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-points-title">百度</div>
+				            	<div className="opinion-points-info ">
+				            		<span>32452</span>
+				            		<em className="iconfont stock-rise-up ">&#xe86c;</em>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-points-title">腾讯</div>
+				            	<div className="opinion-points-info ">
+				            		<span>32452</span>
+				            		<em className="iconfont stock-go-down">&#xe60e;</em>
+				            	</div>
+				            </li>
+			            </ul>
+			        </div>
+		          	<div className="opinion-hot-container">
+			          	<h2 className="opinion-hot-title">热门舆论</h2>
+			          	<ul>
+				            <li>
+				            	<div className="opinion-hot-avatar">
+				            		<img />
+				            	</div>
+				            	<div className="opinion-hot-info">
+				            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
+				            		<p>If you decorate a static class property, you will get a descriptor with an initializer property. However whereas with Babel 5 this could be re-executed multiple times with potentially differing results, decorators-legacy will precompute the value and return an initializer that will return that value. e.g.</p>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-hot-avatar">
+				            		<img />
+				            	</div>
+				            	<div className="opinion-hot-info">
+				            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
+				            		<p>If you decorate a static class y will precompute the value and return an initializer that will return that value. e.g.</p>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-hot-avatar">
+				            		<img />
+				            	</div>
+				            	<div className="opinion-hot-info">
+				            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
+				            		<p>If you decoratt will return that value. e.g.</p>
+				            	</div>
+				            </li>
+				            <li>
+				            	<div className="opinion-hot-avatar">
+				            		<img />
+				            	</div>
+				            	<div className="opinion-hot-info">
+				            		<h3>Champions<span>@somebody&nbsp;6h</span></h3>
+				            		<p>If you decorate a static class property, you will get a de whereas with Babel 5 this could be re-executed multiple times with potentially differing results, decoe value and return an initit value. e.g.</p>
+				            	</div>
+				            </li>
+				        </ul>
+			        </div>
 		        </div>
 		    </section>
         );

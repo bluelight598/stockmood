@@ -6,8 +6,21 @@ import utils from '../../../../lib/util';
 
 function stockDetailReducer(state = {
         newsOnLoading: false,
-        // newsListArr: [],
-        newsDetail: false
+        // symbol: document.getElementById('J_data').attributes['data-symbol'].value,
+        newsDetail: {
+            body_chn: '',
+            body_eng: '',
+            body_html: '',
+            date: '',
+            ranking: '',
+            sentiment: '',
+            source: '',
+            symbol: '',
+            time: '',
+            title: '',
+            uri: '',
+            url: ''
+        }
     }, action) {
     switch (action.type) {
     case 'GET_STOCK_NEWS_DETAIL':

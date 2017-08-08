@@ -1,0 +1,50 @@
+.list-program-container { // 舆论指数
+	width: 100%;
+	min-height: 45px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #E8E8E8;
+	h2 {
+		font-size: 14px;
+		color: #000000;
+		font-weight: bold;
+		padding: 14px 22px;
+		border-bottom: 1px solid #E8E8E8;
+	}
+	ul {
+		li {
+			padding: 14px 22px;
+			position: relative;
+			background-color: #ffffff;
+			font-size: 12px;
+			a {
+				color: #000000;
+				display: block;
+				.list-program-title {
+					font-size: 14px;
+					display: inline-block;
+				}
+				.list-program-info {
+					float: right;
+					top: 0;
+					right: 0;
+					display: inline-block;
+					font-size: 14px;
+					em {
+						font-style: normal;
+						&.stock-rise-up {
+							color: #FF4040;
+						}
+						&.stock-go-down {
+							color: #1FB955;
+						}
+					}
+				}
+			}
+			&:nth-child(2n) {
+				background-color: #f6f6f6;
+			}
+		}
+	}
+}

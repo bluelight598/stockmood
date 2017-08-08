@@ -11,11 +11,14 @@ import SearchReducer from '../../../../components/search/reducer';
 import stockChartReducer from '../../../../components/stock_chart/reducer';
 import stockDetailReducer from './reducer';
 import DetailContent from './content';
+import listProgramReducer from '../../../../components/listProgram/reducer';
+
 
 const reducer = combineReducers({
     stockDetail: stockDetailReducer,
     stockChart: stockChartReducer,
     search: SearchReducer,
+    listProgram: listProgramReducer,
     login: loginReducer
 });
 

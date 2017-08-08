@@ -10,12 +10,14 @@ import LoginBar from '../../../../components/login/index';
 import loginReducer from '../../../../components/login/reducer';
 import SearchReducer from '../../../../components/search/reducer';
 import stockChartReducer from '../../../../components/stock_chart/reducer';
+import listProgramReducer from '../../../../components/listProgram/reducer';
 import stockDetailReducer from './reducer';
 
 const reducer = combineReducers({
     stockDetail: stockDetailReducer,
     stockChart: stockChartReducer,
     search: SearchReducer,
+    listProgram: listProgramReducer,
     login: loginReducer
 });
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import ListProgram from '../../../../components/listProgram/index';
 import { getUrlQuery } from '../../../../lib/util';
 import $ from 'superagent';
 import superagentJsonapify from 'superagent-jsonapify';
@@ -43,6 +43,14 @@ class DetailContent extends React.Component {
     	}
     }
 
+    renderListProgram() {
+    	if (this.props.stockDetail.newsDetail.symbol) {
+		    return <ListProgram programType={`stockRELA`} symbol={this.props.stockDetail.newsDetail.symbol}></ListProgram>;
+    	} else {
+    		return '';
+    	}
+    }
+
     render() {
 		  let iconClass = '';
 		  let iconContent = '';
@@ -55,14 +63,13 @@ class DetailContent extends React.Component {
 		  } else {
 
 		  }
-		  console.log(this.props)
         return (
             <section className="content-container">
 		        <div  className="left-content-warpper">
 		        	<div className="news-content-header">
-			        	<h2>{this.props.stockDetail.newsDetail && this.props.stockDetail.newsDetail.title}</h2>
+			        	<h2>{this.props.stockDetail.newsDetail.title}</h2>
 			        	<div className="news-content-header-bar">
-			        		<div className="news-content-header-date">{this.props.stockDetail.newsDetail && this.props.stockDetail.newsDetail.date}</div>
+			        		<div className="news-content-header-date">{this.props.stockDetail.newsDetail.date}</div>
 			        		<ul>
 			        			<li>情绪值 +21</li>
 			        			<li>后市 +0.50%</li>
@@ -89,6 +96,7 @@ class DetailContent extends React.Component {
 		        	</div>
 		        </div>
 		        <div  className="right-content-warpper">
+		        	{this.renderListProgram()}
 		          	<div className="opinion-points-container">
 			          	<h2>舆论指数</h2>
 			            <ul>
@@ -149,7 +157,6 @@ let actions = {
 		                    type: 'FINISH_NEWS_LOADING'
 		                });
 	                    const body = response.body;
-	                    console.log(body)
 	                    if (body.code==0) {
 	                        dispatch({
 	                            type: 'GET_STOCK_NEWS_DETAIL',

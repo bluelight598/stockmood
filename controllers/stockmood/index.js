@@ -28,6 +28,8 @@ var userCenterController = {
         app.get('/api/checkUserLogin.do', stockApi.checkUserLogin); // 检测用户登录接口
         app.get('/stockDetail', this.stockDetail); // Stockmood 详情页
         app.get('/stock/getNewsDetail.do', stockApi.getNewsDetail); // Stockmood 详情页 - 获取新闻详情
+        app.get('/stock/getStockRELA.do', stockApi.getStockRELA); // Stockmood 详情页 - 获取新闻详情
+        
     },
     stockhome: function(req, res, next) {
         res.render('./system/home/index', {

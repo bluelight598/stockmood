@@ -260,6 +260,7 @@ module.exports.getStockChartPreview = function(req, res, next) {
 
 	var getChartsOption = function(data) {
 		var options = {};
+
 		function splitData(rawData) {
 			var datas = [];
 			var times = [];
@@ -283,7 +284,7 @@ module.exports.getStockChartPreview = function(req, res, next) {
 			};
 		}
 		//MA计算公式
-		function calculateMA(data,dayCount) {
+		function calculateMA(data, dayCount) {
 			var result = [];
 			for (var i = 0, len = data.times.length; i < len; i++) {
 				if (i < dayCount) {
@@ -294,11 +295,11 @@ module.exports.getStockChartPreview = function(req, res, next) {
 				for (var j = 0; j < dayCount; j++) {
 					sum += data.datas[i - j][1];
 				}
-				result.push([i,(sum / dayCount).toFixed(2)]);
+				result.push([i, (sum / dayCount).toFixed(2)]);
 			}
 			return result;
 		}
-		data.forEach((el,index)=>{
+		data.forEach((el, index) => {
 			var stockData = false;
 			try {
 				stockData = JSON.parse(el.data);
@@ -306,10 +307,10 @@ module.exports.getStockChartPreview = function(req, res, next) {
 				yesterDayPrice = lastestData[0];
 				todayPrice = lastestData[1];
 				stockData = splitData(stockData.slice(-180)); // 取前180天的数据
-				var price = todayPrice.close*100;
-				price = price.toString().split('.')[0]/100;
-				var rate = ((todayPrice.close - yesterDayPrice.close)/yesterDayPrice.close*10000);
-				rate = rate.toString().split('.')[0]/100 + '%';
+				var price = todayPrice.close * 100;
+				price = price.toString().split('.')[0] / 100;
+				var rate = ((todayPrice.close - yesterDayPrice.close) / yesterDayPrice.close * 10000);
+				rate = rate.toString().split('.')[0] / 100 + '%';
 				options[el.symbol] = {
 					option: {
 						title: {
@@ -377,7 +378,7 @@ module.exports.getStockChartPreview = function(req, res, next) {
 								}
 							},
 							clipOverflow: false, // 是否对超出部分裁剪，默认裁剪
-							data: calculateMA(stockData,10)
+							data: calculateMA(stockData, 10)
 						}]
 					},
 					price: price,
@@ -402,18 +403,18 @@ module.exports.getStockChartPreview = function(req, res, next) {
 			stocks = yield mongoose.stock_db.model('SHEET_US_DAILY_DATA').find({
 				$or: [{
 					'symbol': 'BABA'
-				},{
+				}, {
 					'symbol': 'AMD'
 				}]
 			});
 			stocklist = yield mongoose.stock_db.model('SHEET_US_DAILY_LIST').find({
 				$or: [{
 					'symbol': 'BABA'
-				},{
+				}, {
 					'symbol': 'AMD'
 				}]
 			});
-		} catch(err) {
+		} catch (err) {
 			console.log(err);
 			return utils.response(req, res, {
 				data: {
@@ -422,7 +423,7 @@ module.exports.getStockChartPreview = function(req, res, next) {
 			}, CODE.SERVER_EXECUTE_MONGO_ERROR);
 		}
 		stockEchartsOptions = getChartsOption(stocks);
-		stocklist.forEach((el,index)=>{
+		stocklist.forEach((el, index) => {
 			stockResData.push({
 				name: el.name,
 				symbol: el.symbol,
@@ -437,8 +438,8 @@ module.exports.getStockChartPreview = function(req, res, next) {
 			}
 		}, CODE.SUCCESS);
 	});
-	
-	
+
+
 };
 
 module.exports.goToStockDetail = function(req, res, next) {
@@ -1544,7 +1545,7 @@ module.exports.getUserLogin = function(req, res, next) {
 			}
 		}
 	};
-	if (mockUserDB[req.query.username] && mockUserDB[req.query.username].password==req.query.password) {
+	if (mockUserDB[req.query.username] && mockUserDB[req.query.username].password == req.query.password) {
 		var userInfo = mockUserDB[req.query.username].userInfo;
 		co(function*() { // 用户名、密码验证成功，写入session
 			yield kickOffUser(userInfo.uid); // 尝试删除用户的过期session记录;
@@ -1595,10 +1596,10 @@ module.exports.getUserLogout = function(req, res, next) {
 			code: '501',
 			message: '登出失败，服务器内部错误'
 		});
-	}	
+	}
 }
 
-module.exports.checkUserLogin = function(req,res,next) {
+module.exports.checkUserLogin = function(req, res, next) {
 	var accessToken = false;
 	if (req.session.accessToken) {
 		accessToken = req.session.accessToken;
@@ -1608,35 +1609,54 @@ module.exports.checkUserLogin = function(req,res,next) {
 	}, CODE.SUCCESS);
 }
 
-
-module.exports.getNewsDetail = function(req,res,next) {
+module.exports.getNewsDetail = function(req, res, next) {
 	var newsUri = req.query.newsUri;
-    if (newsUri) {
-        co(function*() {
-            var result = false;
-            try {
-                var stockNews = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({
-                    'uri': newsUri
-                });
+	if (newsUri) {
+		co(function*() {
+			var result = false;
+			try {
+				var stockNews = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({
+					'uri': newsUri
+				});
 
-                // console.log(stockNews)
-               
-                if (stockNews == null) {
-                    // return res.send(`404找不到相关文章`);
-                }
-        		return utils.response(req, res, {
-        			data: stockNews
-        		}, CODE.SUCCESS);
+				// console.log(stockNews)
 
-            } catch (e) {
-                log.error(`/controller/stockmood/index.js - stockDetail - 数据解析错误`);
-                log.error(e);
-        		return utils.response(req, res, {}, CODE.SERVER_INNER_ERROR);
-            }
-        });
-    } else {
-        return utils.response(req, res, {}, CODE.PARAMETER_ERROR);
-    }
+				if (stockNews == null) {
+					// return res.send(`404找不到相关文章`);
+				}
+				return utils.response(req, res, {
+					data: stockNews
+				}, CODE.SUCCESS);
+
+			} catch (e) {
+				log.error(`/controller/stockmood/index.js - stockDetail - 数据解析错误`);
+				log.error(e);
+				return utils.response(req, res, {}, CODE.SERVER_INNER_ERROR);
+			}
+		});
+	} else {
+		return utils.response(req, res, {}, CODE.PARAMETER_ERROR);
+	}
 }
 
-
+module.exports.getStockRELA = function(req, res, next) {
+	var symbol = req.query.symbol || false;
+	if (symbol) {
+		mongoose.stock_db.model('SHEET_US_RELA').find({
+			company1: symbol
+		}).limit(5).sort({
+			correlation: -1
+		}).exec(function(err,data){
+			if (!err) {
+				return utils.response(req, res, {
+					data: data
+				}, CODE.SUCCESS);
+			} else {
+				return utils.response(req, res, {
+					data: [],
+					error: err,
+				}, CODE.SERVER_EXECUTE_MONGODB_ERROR);
+			}
+		});
+	}
+}
