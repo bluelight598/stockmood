@@ -5,7 +5,7 @@
 var CODE = {
 	SUCCESS: {
 		code: '0',
-		message: '成功'
+		message: '操作成功'
 	},
 	SERVER_INNER_ERROR: {
 		code: '50001',
@@ -18,6 +18,10 @@ var CODE = {
 	SERVER_EXECUTE_REDIS_ERROR: {
 		code: '50003',
 		message: 'Redis操作执行错误'
+	},
+	SERVER_EXECUTE_MONGO_ERROR: {
+		code: '50004',
+		message: 'mongo操作执行错误'
 	},
 	SERVER_NOT_FOUND: {
 		code: '40400',

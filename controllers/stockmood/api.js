@@ -70,7 +70,7 @@ module.exports.getStockListAsLike = function(req, res, next) {
 	}
 };
 
-module.exports.getStockChartPreview = function(req, res, next) {
+module.exports.getStockChartPreview_MOCK = function(req, res, next) {
 	/*
 	 * 返回常用股票预览图表 // todo 从cookie中读取，并默认返回四个
 	 */
@@ -244,13 +244,201 @@ module.exports.getStockChartPreview = function(req, res, next) {
 				rate: '-0.80%'
 			}, {
 				name: 'BaiDu.',
-				symbol: 'DUDU',
+				symbol: 'BIDU',
 				option: mock1,
 				price: 140.35,
 				rate: '+0.80%'
 			}]
 		}
 	}, CODE.SUCCESS);
+};
+
+module.exports.getStockChartPreview = function(req, res, next) {
+	/*
+	 * 返回常用股票预览图表 // todo 从cookie中读取，并默认返回四个
+	 */
+
+	var getChartsOption = function(data) {
+		var options = {};
+		function splitData(rawData) {
+			var datas = [];
+			var times = [];
+			var vols = [];
+			for (var i = 0; i < rawData.length; i++) {
+				var item = rawData[i];
+				var tmpData = [];
+				tmpData.push(item.open)
+				tmpData.push(item.close)
+				tmpData.push(item.low)
+				tmpData.push(item.high)
+				tmpData.push(item.volume)
+				datas.push(tmpData);
+				times.push(item.date);
+				vols.push(item.volume);
+			}
+			return {
+				datas: datas,
+				times: times,
+				vols: vols,
+			};
+		}
+		//MA计算公式
+		function calculateMA(data,dayCount) {
+			var result = [];
+			for (var i = 0, len = data.times.length; i < len; i++) {
+				if (i < dayCount) {
+					result.push('-');
+					continue;
+				}
+				var sum = 0;
+				for (var j = 0; j < dayCount; j++) {
+					sum += data.datas[i - j][1];
+				}
+				result.push([i,(sum / dayCount).toFixed(2)]);
+			}
+			return result;
+		}
+		data.forEach((el,index)=>{
+			var stockData = false;
+			try {
+				stockData = JSON.parse(el.data);
+				lastestData = stockData.slice(-2);
+				yesterDayPrice = lastestData[0];
+				todayPrice = lastestData[1];
+				stockData = splitData(stockData.slice(-180)); // 取前180天的数据
+				var price = todayPrice.close*100;
+				price = price.toString().split('.')[0]/100;
+				var rate = ((todayPrice.close - yesterDayPrice.close)/yesterDayPrice.close*10000);
+				rate = rate.toString().split('.')[0]/100 + '%';
+				options[el.symbol] = {
+					option: {
+						title: {
+							show: false
+						},
+						legend: { // 图例
+							// show: false
+							show: true,
+						},
+						grid: { // 直角坐标系网格
+							// show: false
+							x: 0,
+							y: 0,
+							x2: 0,
+							y2: 0,
+							borderWidth: 1
+						},
+						xAxis: { // x 轴
+							show: false
+						},
+						yAxis: { // y 轴
+							show: false,
+							type: 'value',
+							scale: true,
+							boundaryGap: ['20%', '20%'],
+							splitLine: { // 坐标轴在 grid 区域中的分隔线
+								show: false
+							},
+							axisLabel: { // 刻度标签
+								show: false
+							}
+						},
+						series: [{
+							type: 'line',
+							smooth: false,
+							smoothMonotone: 'x',
+							symbol: 'none',
+							// symbol: 'circle',
+							// symbolSize: 2,
+							"areaStyle": {
+								"normal": {
+									// "color": "#368cf2",
+									color: {
+										type: 'linear',
+										x: 0,
+										y: 0,
+										x2: 0,
+										y2: 1,
+										colorStops: [{
+											offset: 0,
+											color: '#368cf2' // 0% 处的颜色
+										}, {
+											offset: 1,
+											color: '#ffffff' // 100% 处的颜色
+										}],
+										globalCoord: false // 缺省为 false
+									},
+									"opacity": 0.4
+								}
+							},
+							"lineStyle": {
+								"normal": {
+									"color": "#368cf2",
+									"width": 2
+								}
+							},
+							clipOverflow: false, // 是否对超出部分裁剪，默认裁剪
+							data: calculateMA(stockData,10)
+						}]
+					},
+					price: price,
+					rate: rate
+				}
+			} catch (e) {
+				console.log('股票数据解析错误');
+				console.log(e);
+				console.log(el);
+			}
+		});
+		return options;
+	}
+
+	co(function*() {
+		var stocks = [];
+		var stocklist = [];
+		var stockEchartsOptions = [];
+		var stockResData = [];
+		var result = false;
+		try {
+			stocks = yield mongoose.stock_db.model('SHEET_US_DAILY_DATA').find({
+				$or: [{
+					'symbol': 'BABA'
+				},{
+					'symbol': 'AMD'
+				}]
+			});
+			stocklist = yield mongoose.stock_db.model('SHEET_US_DAILY_LIST').find({
+				$or: [{
+					'symbol': 'BABA'
+				},{
+					'symbol': 'AMD'
+				}]
+			});
+		} catch(err) {
+			console.log(err);
+			return utils.response(req, res, {
+				data: {
+					stock: stockEchartsOptions
+				}
+			}, CODE.SERVER_EXECUTE_MONGO_ERROR);
+		}
+		stockEchartsOptions = getChartsOption(stocks);
+		stocklist.forEach((el,index)=>{
+			stockResData.push({
+				name: el.name,
+				symbol: el.symbol,
+				option: stockEchartsOptions[el.symbol].option,
+				price: stockEchartsOptions[el.symbol].price,
+				rate: stockEchartsOptions[el.symbol].rate
+			})
+		});
+		return utils.response(req, res, {
+			data: {
+				stock: stockResData
+			}
+		}, CODE.SUCCESS);
+	});
+	
+	
 };
 
 module.exports.goToStockDetail = function(req, res, next) {
@@ -1329,7 +1517,6 @@ module.exports.getOpinionPoints = function(req, res, next) {
 	}, CODE.SUCCESS);
 }
 
-
 module.exports.getUserLogin = function(req, res, next) {
 	/*
 	 * Stockmood 登录mock接口
@@ -1408,10 +1595,8 @@ module.exports.getUserLogout = function(req, res, next) {
 			code: '501',
 			message: '登出失败，服务器内部错误'
 		});
-	}
-	
+	}	
 }
-
 
 module.exports.checkUserLogin = function(req,res,next) {
 	var accessToken = false;
@@ -1419,6 +1604,39 @@ module.exports.checkUserLogin = function(req,res,next) {
 		accessToken = req.session.accessToken;
 	}
 	return utils.response(req, res, {
-		userInfo: accessToken
+		userInfo: accessToken,
 	}, CODE.SUCCESS);
 }
+
+
+module.exports.getNewsDetail = function(req,res,next) {
+	var newsUri = req.query.newsUri;
+    if (newsUri) {
+        co(function*() {
+            var result = false;
+            try {
+                var stockNews = yield mongoose.stock_db.model('SHEET_US_NEWS').findOne({
+                    'uri': newsUri
+                });
+
+                // console.log(stockNews)
+               
+                if (stockNews == null) {
+                    // return res.send(`404找不到相关文章`);
+                }
+        		return utils.response(req, res, {
+        			data: stockNews
+        		}, CODE.SUCCESS);
+
+            } catch (e) {
+                log.error(`/controller/stockmood/index.js - stockDetail - 数据解析错误`);
+                log.error(e);
+        		return utils.response(req, res, {}, CODE.SERVER_INNER_ERROR);
+            }
+        });
+    } else {
+        return utils.response(req, res, {}, CODE.PARAMETER_ERROR);
+    }
+}
+
+

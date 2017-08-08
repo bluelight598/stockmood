@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import './index.less';
+import ContentContainer from './content';
 import NavBar from '../../../../components/nav/index';
 import LoginBar from '../../../../components/login/index';
 import loginReducer from '../../../../components/login/reducer';
 import SearchReducer from '../../../../components/search/reducer';
 import stockChartReducer from '../../../../components/stock_chart/reducer';
 import stockDetailReducer from './reducer';
-import DetailContent from './content';
 
 const reducer = combineReducers({
     stockDetail: stockDetailReducer,
@@ -31,12 +31,12 @@ const store = createStore(
 const rootEl = document.getElementById('container');
 ReactDOM.render(
   <Provider store={store}>
-    <section>
+  	<section>
       <LoginBar></LoginBar>
-      <section className="header-container">
-        <NavBar barType="default"></NavBar>
-      </section>
-      <DetailContent></DetailContent>
+	    <section className="header-container">
+	    	<NavBar barType="default"></NavBar>
+	    </section>
+      <ContentContainer></ContentContainer>
     </section>
   </Provider>,
   rootEl,

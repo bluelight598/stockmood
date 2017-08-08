@@ -7,100 +7,20 @@ body {
 		.header-container {}
 		.content-container {
 			.left-content-warpper {
-				padding: 12px 30px 65px 30px;
-				background-color: #ffffff;
-				.news-content-header {
-					h2 {
-						padding: 18px 0;
-						font-size: 26px;
-						color: #000000;
-						letter-spacing: 0;
-						line-height: 38px;
-						font-weight: bolder;
-						font-family: PingFangSC-Semibold;
-					}
-					.news-content-header-bar {
-						position: relative;
-						padding-bottom: 16px;
-						border-bottom: 1px solid #e8e8e8;
-						.news-content-header-date {
-							display: inline-block;
-							line-height: 24px;
-							font-size: 12px;
-							color: #000000;
-							letter-spacing: 0;
-						}
-						ul {
-							position: absolute;
-							right: 0;
-							top: 0;
-							li {
-								display: inline-block;
-								font-size: 11px;
-								color: #9B9B9B;
-								letter-spacing: 0;
-								background: #F8F8F8;
-								border: 1px solid #E8E8E8;
-								border-radius: 3px;
-								padding: 4px 8px;
-								margin-left: 10px;
-							}
-						}
-					}
+				.stock-chart-container {
+
 				}
-				.news-content-body {
-					.news-content-body-env {
-						padding: 20px 0;
-						font-family: PingFangSC-Regular;
-						font-size: 16px;
-						color: #000000;
-						letter-spacing: 0;
-						line-height: 28px;
-						border-bottom: 1px solid #e8e8e8;
-					}
-					.news-content-body-cn {
-						padding: 20px 0;
-						font-family: PingFangSC-Regular;
-						font-size: 16px;
-						color: #000000;
-						letter-spacing: 0;
-						line-height: 28px;
-					}
-				}
-				.news-content-footer {
-					ul {
-						text-align: center;
-						padding-top: 60px;
-						li {
-							display: inline-block;
-							text-align: center;
-							margin: 0 30px;
-							.iconfont {
-								padding: 0;
-								height: 60px;
-								width: 60px;
-								line-height: 60px;
-								border-radius: 50%;
-								text-align: center;
-								color: #ffffff;
-								font-size: 30px;
-								cursor: pointer;
-								&.J_optimismIcon {
-									background-color: #FF4040;
-								}
-								&.J_pessimismIcon {
-									background-color: #1EB954;
-								}
-							}
-							.news-hope-status {
-								padding-top: 10px;
-								font-size: 14px;
-								color: #9B9B9B;
-								letter-spacing: 0;
-								line-height: 20px;
-							}
-						}
-					}
+				.stock-news-container { // 相关新闻
+					position: relative;
+					// .stock-news-loading-mask {
+					// 	position: absolute;
+					// 	top: 0;
+					// 	left: 0;
+					// 	width: 100%;
+					// 	height: 100%;
+					// 	background-color: #000000;
+					// 	opacity: 0.1;
+					// }
 				}
 			}
 			.right-content-warpper {
@@ -120,6 +40,68 @@ body {
 					width: 100%;
 					position: relative;
 					display: inline-block;
+					.stock-chart-container {
+						width: 100%;
+						// height: 554px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 100%;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
 				}
 				.right-content-warpper {
 					width: 100%;
@@ -242,6 +224,68 @@ body {
 					width: 100%;
 					position: relative;
 					display: inline-block;
+					.stock-chart-container {
+						width: 100%;
+						// height: 554px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 100%;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
 				}
 				.right-content-warpper {
 					width: 100%;
@@ -364,6 +408,67 @@ body {
 					width: 668px;
 					position: relative;
 					display: inline-block;
+					.stock-chart-container {
+						width: 668px;
+						background-color: #ffffff;
+						padding: 18px;
+						border: 1px solid #E8E8E8;
+						.stock-chart-title {
+							font-size: 22px;
+							line-height: 26px;
+							color: #000000;
+							font-weight: bold;
+						}
+						.stock-chart-desc {
+							font-size: 14px;
+							line-height: 18px;
+							color: #9b9b9b;
+						}
+						.stock-chart-points {
+							line-height: 60px;
+							strong {
+								font-size: 44px;
+								line-height: 60px;
+								font-weight: bold;
+							}
+							span {
+								vertical-align: super;
+								line-height: 60px;
+								i {
+									font-size: 20px;
+									padding: 0 12px;
+									line-height: 60px;
+									font-style: normal;
+								}
+								em {
+									font-size: 18px;
+									font-style: normal;
+									line-height: 60px;
+								}
+								&.stock-go-down {
+									color: #339900;
+								}
+								&.stock-rise-up {
+									color: #ff4040;
+								}
+							}
+						}
+						.stock-chart-main {
+							width: 100%;
+							height: 400px;
+							background-color: #ffffff;
+							.J_mainChart {
+								height: 100%;
+								width: 100%;
+							}
+						}
+					}
+					// .stock-news-container { // 相关新闻
+					// 	width: 668px;
+					// 	height: 514px;
+					// 	background-color: green;
+					// 	margin-top: 14px;
+					// }
 				}
 				.right-content-warpper {
 					width: 370px;

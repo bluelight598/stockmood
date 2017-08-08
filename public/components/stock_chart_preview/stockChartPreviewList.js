@@ -30,12 +30,14 @@ class StockChartPreviewList extends React.Component {
             var riseUpStateClass =  stockInfo.rate.slice(0,1) === '+' ? 'J_riseup' : '';
             previewList.push(
                 <li  key={chartsId}>
-                    <ReactEcharts ref={chartsId} chartId={chartsId} stockInfo={stockInfo} className={'J_chartPreview'} ></ReactEcharts>
-                    <div className={`stock-detail ${riseUpStateClass}`}>
-                        <strong className="stock-detail-name">{stockInfo.symbol}</strong>
-                        <strong className="stock-detail-price">{stockInfo.price}</strong>
-                        <span className="stock-detail-rate">{stockInfo.rate}</span>
-                    </div>
+                    <a href={`/stockDetailList/${stockInfo.symbol}`}>
+                        <ReactEcharts ref={chartsId} chartId={chartsId} stockInfo={stockInfo} className={'J_chartPreview'} ></ReactEcharts>
+                        <div className={`stock-detail ${riseUpStateClass}`}>
+                            <strong className="stock-detail-name">{stockInfo.symbol}</strong>
+                            <strong className="stock-detail-price">{stockInfo.price}</strong>
+                            <span className="stock-detail-rate">{stockInfo.rate}</span>
+                        </div>
+                    </a>
                 </li>
             );
         }

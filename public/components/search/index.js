@@ -121,12 +121,11 @@ let actions = {
                         })
                         .then(function(response) {
                             const body = response.body;
-                            console.log(body)
                             if (body.code==0) {
                                 var data = body.data;
                                 if (data) {
                                     console.log(`targetSymbol = ${data.maxCompare.symbol}`)
-                                    window.location.href = `/stockDetail/${data.maxCompare.symbol}`;
+                                    window.location.href = `/stockDetailList/${data.maxCompare.symbol}`;
                                 }
                             } 
                         }).catch(function (err) {

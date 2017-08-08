@@ -57,10 +57,12 @@ var utils = {
 		 *  }
 		 */
 		var CODE = code ? code : {};
+		console.log('===============')
+		console.log(CODE)
 		if (req.method == 'GET' && req.query.callback) {
-			res.jsonp(Object.assign(CODE, data));
+			res.jsonp(Object.assign({}, CODE, data));
 		} else {
-			res.json(Object.assign(CODE, data));
+			res.json(Object.assign({}, CODE, data));
 		}
 	},
 	generateMixed: function(n) {
