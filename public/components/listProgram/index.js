@@ -35,7 +35,7 @@ class ListProgram extends React.Component {
 	    	});
     	} else {
     		listRELA.push(
-    			<li key="list_program_rela_empty">暂时没有相关股票</li>
+    			<li key="list_program_rela_empty"><a href="javascript:void(0);">暂时没有相关股票</a></li>
 		    );
     	}
     	return listRELA;
